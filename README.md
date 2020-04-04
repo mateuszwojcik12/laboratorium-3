@@ -83,3 +83,54 @@ i `main()` oraz trzy diagramy, przedstawiające wyniki
 analizy składowych głównych, analizy czynnikowej
 i skalowania wielowymiarowego danych stylometrycznych
 wszystkich książek z folderu `teksty`.
+
+12. Zadanie nadobowiązkowe: ruchome wykresy trójwymiarowe.
+Wymagane jest zainstalowanie pakietu [ImageMagick](https://imagemagick.org/).
+
+    * Rysowanie poszczególnych punktów odbywa się
+    podobnie, jak przy wykresach dwuwymiarowych.
+    Należy tylko podawać trzy współrzędne punktów
+    zamiast dwóch.
+
+    * Żeby wykres się poruszał, trzeba w funkcji
+    `draw_frame()` zmieniać *azymut* (`azim`),
+    czyli kąt między punktem widzenia a południkiem
+    zerowym, oraz *wysokość* (`elev`), czyli kąt
+    między punktem widzenia a płaszczyzną horyzontu.
+
+    * Uzupełnić wartości stałych `NUM_FRAMES`,
+    `ELEVATION_ZERO`, `ELEVATION_SPEED`,
+    `AZIMUTH_ZERO`, `AZIMUTH_SPEED` w funkcji
+    `plot3d()`. Kąty podać w mierze stopniowej,
+    czyli nie w radianach. Wskazówka: całkiem
+    niezłe wyniki można otrzymać przy
+    `ELEVATION_SPEED = 0`.
+
+    * Obliczyć `elev` i `azim` w funkcji `draw_frame()`
+    tak, by w pierwszej połowie klatek punkt widzenia
+    przemieszczał się od punktu (`AZIMUTH_ZERO`, `ELEVATION_ZERO`)
+    z prędkością (`AZIMUTH_SPEED`, `ELEVATION_SPEED`)
+    na klatkę.
+
+    * Obliczyć `elev` i `azim` w funkcji `draw_frame()`
+    tak, by w drugiej połowie klatek punkt widzenia
+    przemieszczał się od punktu
+    (`AZIMUTH_ZERO + NUM_FRAMES * AZIMUTH_SPEED`,
+    `ELEVATION_ZERO + NUM_FRAMES * ELEVATION_SPEED`)
+    w kierunku punktu (`AZIMUTH_ZERO`, `ELEVATION_ZERO`)
+    z prędkością (`-AZIMUTH_SPEED`, `-ELEVATION_SPEED`)
+    na klatkę.
+
+    * Dodać do funkcji `main()` odpowiednie wywołania
+    funkcji `plot3d()`. Pamiętać o zmianie `n_components`
+    na 3 i o podawaniu różnych parametrów `gif_name`
+    z rozszerzeniem `.gif`.
+
+    * Dołączyć do sprawozdania treść funkcji `plot3d()`
+    oraz przesłać jako osobne pliki otrzymane GIF-y.
+    (O ile mi wiadomo, w PDF-ach byłoby widać tylko
+    pierwsze klatki ruchomych GIF-ów). Ewentualnie
+    skorzystać z usługi https://cloudconvert.com/gif-to-mp4,
+    żeby skonwertować GIF-y na pliki wideo, które
+    widać w PDF-ach jako ruchome obrazki. (Wada:
+    plików wideo nie da się zapętlić).

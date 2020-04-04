@@ -8,8 +8,10 @@ import re
 import string
 import unicodedata
 
+from matplotlib import animation
 from matplotlib import patches
 from matplotlib import pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 from sklearn import decomposition
 from sklearn import manifold
 
@@ -72,15 +74,54 @@ def split_filename(filename, colors):
 
 def plot(filenames, X, title):
     colors = {}
+    fig = plt.figure(figsize=(6.4, 4.8))
+    ax = fig.add_subplot(111)
     for filename, (x, y) in zip(filenames, X):
         author, color, book = split_filename(filename, colors)
-        plt.plot(x, y, marker='o', color=color, label=author)
-        plt.annotate(xy=(x, y), s=book, color=color)
-    plt.title(title)
+        ax.plot(x, y, marker='o', color=color, label=author)
+        ax.annotate(xy=(x, y), s=book, color=color)
     legend_handles = [
         patches.Circle((0.5, 0.5), color=x) for x in colors.values()]
-    plt.legend(legend_handles, colors.keys(), loc='upper left')
+    ax.legend(legend_handles, colors.keys(), loc='upper left')
+    plt.title(title)
     plt.show()
+
+
+def plot3d(filenames, X, title, gif_name):
+    # TU(12): Wpisać wybrane przez siebie wartości.
+    NUM_FRAMES = 0
+    ELEVATION_ZERO = 0.0
+    ELEVATION_SPEED = 0.0
+    AZIMUTH_ZERO = 0.0
+    AZIMUTH_SPEED = 0.0
+
+    def draw_frame(frame_num):
+        logging.info('Drawing frame %d of %s', frame_num, title)
+        plt.clf()
+        ax = fig.add_subplot(111, projection='3d')
+        ax.axes.xaxis.set_ticklabels([])
+        ax.axes.yaxis.set_ticklabels([])
+        ax.axes.zaxis.set_ticklabels([])
+        colors = {}
+        for filename, (x, y, z) in zip(filenames, X):
+            author, color, book = split_filename(filename, colors)
+            ax.plot([x], [y], [z], marker='o', color=color, label=author)
+            ax.text(x, y, z, s=book, color=color)
+        if frame_num <= NUM_FRAMES:
+            # TU(12): Obliczyć `elev` i `azim` zgodnie z instrukcją.
+            pass
+        else:
+            # TU(12): Obliczyć `elev` i `azim` zgodnie z instrukcją.
+            pass
+        ax.view_init(elev=elev, azim=azimu)
+        legend_handles = [
+            patches.Circle((0.5, 0.5), color=x) for x in colors.values()]
+        ax.legend(legend_handles, colors.keys(), loc='upper left')
+        plt.title(title, loc='right')
+
+    fig = plt.figure(figsize=(6.4, 4.8))
+    anim = animation.FuncAnimation(fig, draw_frame, frames=2 * NUM_FRAMES)
+    anim.save(gif_name, writer='imagemagick', fps=12.5)
 
 
 def main():

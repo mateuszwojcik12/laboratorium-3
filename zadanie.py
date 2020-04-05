@@ -52,10 +52,19 @@ COLORS = [
 
 def analyze(filename):
     counter = collections.Counter()
-    with open(filename, 'rt') as file:
+    result = []
+    with open(filename, 'rt', encoding='UTF-8') as file:
         logging.info('Processing %s', filename)
         contents = file.read().split(u'-----\r\nTa lektura,')[0]
         tokens = TOKENIZE_RE.findall(contents)
+
+
+        for element in [token.lower() for token in tokens]:
+            if element in INTERESTING_TOKEN_SET:
+                counter[element] += 1
+
+        for token in INTERESTING_TOKEN_SET:
+            result.append(counter[token]/len(tokens))
         # TU(5): Uzupełnić zgodnie z instrukcją.
     # TU(6): Uzupełnić zgodnie z instrukcją.
     return result
@@ -145,4 +154,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # main()
+    analyze('teksty/prus-anielka.txt')

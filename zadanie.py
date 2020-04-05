@@ -91,7 +91,7 @@ def plot(filenames, X, title):
         ax.annotate(xy=(x, y), s=book, color=color)
     legend_handles = [
         patches.Circle((0.5, 0.5), color=x) for x in colors.values()]
-    ax.legend(legend_handles, colors.keys(), loc='upper left')
+    ax.legend(legend_handles, colors.keys(), loc='best')
     plt.title(title)
     plt.show()
 
@@ -146,13 +146,16 @@ def main():
         decomposition.PCA(n_components=2).fit_transform(X),
         'Principal component analysis')
 
-    # TU(9): Narysować analogiczny do powyższego diagram
-    # wyników analizy czynnikowej (n_components=2).
+    plot(
+        filenames,
+        decomposition.FactorAnalysis(n_components=2).fit_transform(X),
+        'Factor Analysis')
 
-    # TU(10): Narysować analogiczny do powyższych diagram
-    # wyników skalowania wielowymiarowego (n_components=2).
+    plot(
+        filenames,
+        manifold.MDS(n_components=2).fit_transform(X),
+        'Multidimensional Scaling')
 
 
 if __name__ == '__main__':
-    # main()
-    analyze('teksty/prus-anielka.txt')
+    main()
